@@ -61,7 +61,6 @@ function checkForMatch(target, game, current) {
         flip(target);
     }
     game.prev = null;
-
 }
 
 
