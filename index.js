@@ -8,6 +8,8 @@ const imgArr = [
     'whale.png',
     'wolf.png',
 ];
+const fullScore = 8;
+const retries = 12;
 
 function getRandomImage(index) {
     let imgIndex = -1;
@@ -79,10 +81,10 @@ function render_game() {
             target.style.backgroundImage = `url(img/${imgArr[current]})`;
             target.style.backgroundSize = 'cover';
             checkForMatch(target, game, current);
-            if (game.wrong == 12) {
+            if (game.wrong == retries) {
                 displayCover('Game Over !!!');
             }
-            else if (game.score == 8) {
+            else if (game.score == fullScore) {
                 displayCover('You Win !!!');
             }
         })
