@@ -60,12 +60,6 @@ function checkForMatch(target, game, current) {
         flip(game.prev.target);
         flip(target);
     }
-    if (game.wrong == 12) {
-        displayCover('Game Over !!!');
-    }
-    else if (game.score == 8) {
-        displayCover('You Win !!!');
-    }
     game.prev = null;
 
 }
@@ -87,6 +81,12 @@ function render_game() {
             target.style.backgroundImage = `url(img/${imgArr[current]})`;
             target.style.backgroundSize = 'cover';
             checkForMatch(target, game, current);
+            if (game.wrong == 12) {
+                displayCover('Game Over !!!');
+            }
+            else if (game.score == 8) {
+                displayCover('You Win !!!');
+            }
         })
     })
 }
