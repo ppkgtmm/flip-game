@@ -41,7 +41,7 @@ async function flip(target) {
     setTimeout(() => {
         target.style.backgroundImage = 'none';
         target.style.pointerEvents = 'auto';
-    }, 500);
+    }, 1500);
 }
 
 function displayCover(message) {
@@ -54,45 +54,50 @@ function displayCover(message) {
     game.style.display = 'none'
 
 }
-function checkForMatch(target) {
-    if (guess.length === 0) {
-        disableClick(target);
-        guess.push(target);
+
+function checkForMatch(target, game, current) {
+    if (!game.prev) {
+        target.style.pointerEvents = 'none';
+        game.prev = { target, tile: current };
+        return
     }
-    else if (guess.length % 2 === 1) {
-        const last = guess.pop();
-        const lastImgIndex = game[last.id] % 8;
-        const currentImgIndex = game[target.id] % 8;
-        if (lastImgIndex !== currentImgIndex) {
-            flip(last);
-            flip(target);
-        }
-        else {
-            if (last.id !== target.id) {
-                score++;
-                console.log(score);
-                disableClick(last);
-                disableClick(target);
-                if (score === 8) {
-                    displayCover('You Win !!!');
-                }
-            }
-            else {
-                enableClick(target);
-            }
-        }
+    if (game.prev.tile === current) {
+        target.style.pointerEvents = 'none';
+        game.score++;
     }
     else {
-        guess.push(target);
+        game.wrong++;
+        flip(game.prev.target);
+        flip(target);
     }
+    if(game.wrong == 5) {
+        displayCover('Game Over !!!');
+    }
+    else if(game.score == 8){
+        displayCover('You Win !!!');
+    }
+    game.prev = null;
 
 }
 
 
 function render_game() {
-    setUp();
+    const game = {
+        game: [],
+        prev: null,
+        score: 0,
+        wrong: 0
+    }
+    const blocks = Array.from(document.querySelectorAll('.block'));
+    setUp(game.game);
     blocks.forEach((block) => {
-        block.addEventListener('click', handleClick)
+        block.addEventListener('click', () => {
+            const { target } = event;
+            const current = game.game[blocks.indexOf(target)]
+            target.style.backgroundImage = `url(img/${imgArr[current]})`;
+            target.style.backgroundSize = 'cover';
+            checkForMatch(target, game, current);
+        })
     })
 }
 
