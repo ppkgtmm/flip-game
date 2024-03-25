@@ -40,9 +40,8 @@ function setUp(game) {
 async function flip(target) {
     setTimeout(() => {
         target.style.backgroundImage = 'none';
-        enableClick(target);
+        target.style.pointerEvents = 'auto';
     }, 500);
-
 }
 
 function displayCover(message) {
