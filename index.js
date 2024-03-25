@@ -96,13 +96,4 @@ function render_game() {
     })
 }
 
-function handleClick(event) {
-    const { target } = event;
-    const imgUrl = imgArr[game[blocks.indexOf(target)]];
-    target.style.backgroundImage = `url(img/${imgUrl})`;
-    target.style.backgroundSize = 'cover';
-    checkForMatch(target);
-}
-
-const blocks = Array.from(document.querySelectorAll('.block'));
 render_game()
