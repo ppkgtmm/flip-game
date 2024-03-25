@@ -70,7 +70,7 @@ function checkForMatch(target, game, current) {
         flip(game.prev.target);
         flip(target);
     }
-    if(game.wrong == 5) {
+    if(game.wrong == 12) {
         displayCover('Game Over !!!');
     }
     else if(game.score == 8){
