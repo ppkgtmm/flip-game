@@ -75,7 +75,7 @@ function checkForMatch(game, current) {
 }
 
 function handlerWithParams(game, blocks) {
-    return async function eventListener() {
+    return  function eventListener() {
         const { target } = event
         const current = blocks.indexOf(target)
         target.style.pointerEvents = 'none'
