@@ -1,3 +1,3 @@
 # ⚡️ swifter
 
-super simple and dumb tile matching game to test your swiftness
+super duper simple tile matching game to test your swiftness
