@@ -1,3 +1,3 @@
-# ⚡️ swifter
+# ⚡️ recaller
 
-super duper simple tile matching game to test your swiftness
+super duper simple tile matching game to test your memory
