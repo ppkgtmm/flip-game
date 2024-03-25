@@ -1,7 +1,10 @@
-* {
-    font-family: DejaVu Sans Mono, monospace;
+body {
+    background-image: url('img/background.jpg');
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0px;
     padding: 0px;
+    text-transform: capitalize;
 }
 
 .wrapper {
@@ -29,7 +32,6 @@
     margin: 20px 0px;
     text-align: center;
     font-size: 40px;
-    ;
     letter-spacing: 2px;
     color: #009788;
 }
@@ -43,12 +45,29 @@
     height: 100vh;
     top: 0;
     text-align: center;
-    background: black;
-    color: white;
+    background: linear-gradient(rgb(1, 220, 197),rgb(189, 211, 224));
     font-size: 50px;
 }
+.message {
+    margin: 0px auto 8px auto;
+}
 
-body {
-    background-image: url('img/background.jpg');
-    background-size: cover;
+#start {
+    width: fit-content;
+    padding: 6px 12px;
+    outline: none;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0px auto;
+    text-transform: uppercase;
+}
+#start:hover {
+    background-color: black;
+    color: white;
+    transition: color 500 ease-in-out;
 }
