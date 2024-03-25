@@ -22,7 +22,7 @@ function getRandomImage(index) {
 }
 
 function setUp(game) {
-    // initialize an array with numbers from 0 to 15, representing indices of tiles
+    // initialize an array with numbers from 0 to 15, representing index of tiles
     let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     // get a random image index
     let imgIndex = getRandomImage(index);
