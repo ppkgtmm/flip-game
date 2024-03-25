@@ -42,7 +42,6 @@ function displayCover(message) {
     cover.style.transition = 'display 4s ease-in-out';
     cover.style.display = 'flex'
     game.style.display = 'none'
-
 }
 
 function checkForMatch(target, game, current) {
