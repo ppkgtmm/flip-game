@@ -42,11 +42,13 @@ function displayCover(message) {
     game.style.display = 'none'
 }
 
-function flipBack(index) {
+function flipBack(indices) {
     setTimeout(() => {
-        const block = document.querySelectorAll('.block')[index]
-        block.style.backgroundImage = 'none'
-        block.style.pointerEvents = 'auto'
+        for (const index of indices) {
+            const block = document.querySelectorAll('.block')[index]
+            block.style.backgroundImage = 'none'
+            block.style.pointerEvents = 'auto'
+        }
     }, 1000)
 }
 
@@ -55,15 +57,13 @@ function checkForMatch(game, current) {
         game.prev = current
         return
     }
-    console.log(game.game[game.prev], game.game[current])
     if (game.game[game.prev] === game.game[current]) {
         game.score++
     }
     else {
         game.wrong++
         document.querySelector('.retries').innerText = retries - game.wrong
-        flipBack(game.prev)
-        flipBack(current)
+        flipBack([game.prev, current])
     }
     if (game.wrong === retries) {
         displayCover('Game Over !!!')
