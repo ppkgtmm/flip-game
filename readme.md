@@ -1,3 +1,3 @@
-# ⬜️ flip game
+# 🀄️ flip game
 
-simple and dumb tile matching game
+super simple and dumb tile matching game
