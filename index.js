@@ -7,96 +7,96 @@ const imgArr = [
     'sword.png',
     'whale.png',
     'wolf.png',
-];
-const fullScore = 8;
-const retries = 12;
+]
+const fullScore = 8
+const retries = 12
 
 function getRandomImage(index) {
-    let imgIndex = -1;
+    let imgIndex = -1
     if (index.length > 0) {
-        imgIndex = index[Math.floor(Math.random() * index.length)];
+        imgIndex = index[Math.floor(Math.random() * index.length)]
     }
-    return imgIndex;
+    return imgIndex
 }
 
 function setUp(game) {
-    let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    let imgIndex = getRandomImage(index);
+    let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    let imgIndex = getRandomImage(index)
     while (imgIndex != -1) {
-        game.push(imgIndex % 8);
-        index.splice(index.indexOf(imgIndex), 1);
-        imgIndex = getRandomImage(index);
+        game.push(imgIndex % 8)
+        index.splice(index.indexOf(imgIndex), 1)
+        imgIndex = getRandomImage(index)
     }
 }
 
 async function flip(target) {
     setTimeout(() => {
-        target.style.backgroundImage = 'none';
-        target.style.pointerEvents = 'auto';
-    }, 1000);
+        target.style.backgroundImage = 'none'
+        target.style.pointerEvents = 'auto'
+    }, 1000)
 }
 
 function displayCover(message) {
-    const msg = document.querySelector('.message');
-    const cover = document.querySelector('.cover');
-    const game = document.querySelector('.game');
-    const start = document.getElementById('start');
+    const msg = document.querySelector('.message')
+    const cover = document.querySelector('.cover')
+    const game = document.querySelector('.game')
+    const start = document.getElementById('start')
     msg.innerHTML = message
     start.innerText = 'restart'
-    cover.style.transition = 'display 4s ease-in-out';
+    cover.style.transition = 'display 4s ease-in-out'
     cover.style.display = 'flex'
     game.style.display = 'none'
 }
 
 function checkForMatch(target, game, current) {
     if (!game.prev) {
-        target.style.pointerEvents = 'none';
-        game.prev = { target, tile: current };
+        target.style.pointerEvents = 'none'
+        game.prev = { target, tile: current }
         return
     }
     if (game.prev.tile === current) {
-        target.style.pointerEvents = 'none';
-        game.score++;
+        target.style.pointerEvents = 'none'
+        game.score++
     }
     else {
-        game.wrong++;
-        flip(game.prev.target);
-        flip(target);
+        game.wrong++
+        flip(game.prev.target)
+        flip(target)
     }
-    game.prev = null;
+    game.prev = null
 }
 
 function handlerWithParams(game, blocks) {
     return function eventListener() {
-        const { target } = event;
+        const { target } = event
         const current = game.game[blocks.indexOf(target)]
-        target.style.backgroundImage = `url(img/${imgArr[current]})`;
-        target.style.backgroundSize = 'cover';
-        checkForMatch(target, game, current);
+        target.style.backgroundImage = `url(img/${imgArr[current]})`
+        target.style.backgroundSize = 'cover'
+        checkForMatch(target, game, current)
         if (game.wrong == retries) {
-            displayCover('Game Over !!!');
+            displayCover('Game Over !!!')
         }
         else if (game.score == fullScore) {
-            displayCover('You Win !!!');
+            displayCover('You Win !!!')
         }
     }
 }
 function render_game() {
-    document.querySelector('.game').style.display = 'block';
-    document.querySelector('.cover').style.display = 'none';
+    document.querySelector('.game').style.display = 'block'
+    document.querySelector('.cover').style.display = 'none'
     const game = {
         game: [],
         prev: null,
         score: 0,
         wrong: 0
     }
-    const blocks = Array.from(document.querySelectorAll('.block'));
-    setUp(game.game);
+    const blocks = Array.from(document.querySelectorAll('.block'))
+    setUp(game.game)
     blocks.forEach((block) => {
         block.addEventListener('click', handlerWithParams(game, blocks))
     })
 }
 
-const start = document.getElementById('start');
+const start = document.getElementById('start')
 start.addEventListener('click', () => render_game())
 render_game()
