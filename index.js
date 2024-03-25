@@ -32,7 +32,6 @@ function setUp(game) {
         game.push(imgIndex % 8);
         // remove the used image index from the original index array
         index.splice(index.indexOf(imgIndex), 1);
-
         // get a new random image index from the updated index array
         imgIndex = getRandomImage(index);
     }
