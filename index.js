@@ -64,7 +64,6 @@ function checkForMatch(target, game, current) {
     game.prev = null;
 }
 
-
 function render_game() {
     const game = {
         game: [],
