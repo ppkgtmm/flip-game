@@ -20,21 +20,23 @@ function getRandomImage(index) {
     // return the random index or default value
     return imgIndex;
 }
-function setUp() {
-    let imgIndex = getImage();
+
+function setUp(game) {
+    // initialize an array with numbers from 0 to 15, representing indices of tiles
+    let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    // get a random image index
+    let imgIndex = getRandomImage(index);
+    // loop until image index array become empty
     while (imgIndex != -1) {
+        // add the random image index to the end of the game array
         game.push(imgIndex % 8);
+        // remove the used image index from the original index array
         index.splice(index.indexOf(imgIndex), 1);
         imgIndex = getImage();
 
+        // get a new random image index from the updated index array
+        imgIndex = getRandomImage(index);
     }
-}
-
-function enableClick(target) {
-    target.style.pointerEvents = 'auto';
-}
-function disableClick(target) {
-    target.style.pointerEvents = 'none';
 }
 
 async function flip(target) {
