@@ -10,29 +10,19 @@ const imgArr = [
 ];
 
 function getRandomImage(index) {
-    // initialize default return value
     let imgIndex = -1;
-    // check if the index array is not empty
     if (index.length > 0) {
-        // get a random index from the array
         imgIndex = index[Math.floor(Math.random() * index.length)];
     }
-    // return the random index or default value
     return imgIndex;
 }
 
 function setUp(game) {
-    // initialize an array with numbers from 0 to 15, representing index of tiles
     let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    // get a random image index
     let imgIndex = getRandomImage(index);
-    // loop until image index array become empty
     while (imgIndex != -1) {
-        // add the random image index to the end of the game array
         game.push(imgIndex % 8);
-        // remove the used image index from the original index array
         index.splice(index.indexOf(imgIndex), 1);
-        // get a new random image index from the updated index array
         imgIndex = getRandomImage(index);
     }
 }
