@@ -33,14 +33,16 @@ async function flip(target) {
     setTimeout(() => {
         target.style.backgroundImage = 'none';
         target.style.pointerEvents = 'auto';
-    }, 1500);
+    }, 1000);
 }
 
 function displayCover(message) {
     const msg = document.querySelector('.message');
     const cover = document.querySelector('.cover');
     const game = document.querySelector('.game');
+    const start = document.getElementById('start');
     msg.innerHTML = message
+    start.innerText = 'restart'
     cover.style.transition = 'display 4s ease-in-out';
     cover.style.display = 'flex'
     game.style.display = 'none'
@@ -64,7 +66,24 @@ function checkForMatch(target, game, current) {
     game.prev = null;
 }
 
+function handlerWithParams(game, blocks) {
+    return function eventListener() {
+        const { target } = event;
+        const current = game.game[blocks.indexOf(target)]
+        target.style.backgroundImage = `url(img/${imgArr[current]})`;
+        target.style.backgroundSize = 'cover';
+        checkForMatch(target, game, current);
+        if (game.wrong == retries) {
+            displayCover('Game Over !!!');
+        }
+        else if (game.score == fullScore) {
+            displayCover('You Win !!!');
+        }
+    }
+}
 function render_game() {
+    document.querySelector('.game').style.display = 'block';
+    document.querySelector('.cover').style.display = 'none';
     const game = {
         game: [],
         prev: null,
@@ -74,20 +93,10 @@ function render_game() {
     const blocks = Array.from(document.querySelectorAll('.block'));
     setUp(game.game);
     blocks.forEach((block) => {
-        block.addEventListener('click', () => {
-            const { target } = event;
-            const current = game.game[blocks.indexOf(target)]
-            target.style.backgroundImage = `url(img/${imgArr[current]})`;
-            target.style.backgroundSize = 'cover';
-            checkForMatch(target, game, current);
-            if (game.wrong == retries) {
-                displayCover('Game Over !!!');
-            }
-            else if (game.score == fullScore) {
-                displayCover('You Win !!!');
-            }
-        })
+        block.addEventListener('click', handlerWithParams(game, blocks))
     })
 }
 
+const start = document.getElementById('start');
+start.addEventListener('click', () => render_game())
 render_game()
