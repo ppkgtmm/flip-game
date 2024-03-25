@@ -61,6 +61,7 @@ function checkForMatch(game, current) {
     }
     else {
         game.wrong++
+        document.querySelector('.retries').innerText = retries - game.wrong
         flipBack(game.prev)
         flipBack(current)
     }
@@ -92,6 +93,7 @@ function render_game() {
     }
     const blocks = Array.from(document.querySelectorAll('.block'))
     setUp(game.game)
+    document.querySelector('.retries').innerText = retries - game.wrong
     blocks.forEach((block) => {
         block.style.backgroundImage = 'none'
         block.style.pointerEvents = 'auto'
