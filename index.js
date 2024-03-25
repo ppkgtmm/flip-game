@@ -9,17 +9,15 @@ const imgArr = [
     'wolf.png',
 ];
 
-let index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-let game = [];
-let guess = [];
-let score = 0;
-
-function getImage() {
+function getRandomImage(index) {
+    // initialize default return value
     let imgIndex = -1;
+    // check if the index array is not empty
     if (index.length > 0) {
+        // get a random index from the array
         imgIndex = index[Math.floor(Math.random() * index.length)];
-
     }
+    // return the random index or default value
     return imgIndex;
 }
 function setUp() {
