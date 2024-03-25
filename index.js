@@ -29,12 +29,6 @@ function setUp(game) {
     }
 }
 
-async function flip(target) {
-    setTimeout(() => {
-        target.style.backgroundImage = 'none'
-        target.style.pointerEvents = 'auto'
-    }, 1000)
-}
 
 function displayCover(message) {
     const msg = document.querySelector('.message')
@@ -48,55 +42,66 @@ function displayCover(message) {
     game.style.display = 'none'
 }
 
-function checkForMatch(target, game, current) {
-    if (!game.prev) {
-        target.style.pointerEvents = 'none'
-        game.prev = { target, tile: current }
+function flipBack(index) {
+    setTimeout(() => {
+        const block = document.querySelectorAll('.block')[index]
+        block.style.backgroundImage = 'none'
+        block.style.pointerEvents = 'auto'
+    }, 1000)
+}
+
+function checkForMatch(game, current) {
+    if (game.prev === -1) {
+        game.prev = current
         return
     }
-    if (game.prev.tile === current) {
-        target.style.pointerEvents = 'none'
+    console.log(game.game[game.prev], game.game[current])
+    if (game.game[game.prev] === game.game[current]) {
         game.score++
     }
     else {
         game.wrong++
-        flip(game.prev.target)
-        flip(target)
+        flipBack(game.prev)
+        flipBack(current)
     }
-    game.prev = null
+    if (game.wrong === retries) {
+        displayCover('Game Over !!!')
+    }
+    else if (game.score === fullScore) {
+        displayCover('You Win !!!')
+    }
+    game.prev = -1
 }
 
 function handlerWithParams(game, blocks) {
-    return function eventListener() {
+    return async function eventListener() {
         const { target } = event
-        const current = game.game[blocks.indexOf(target)]
-        target.style.backgroundImage = `url(img/${imgArr[current]})`
+        const current = blocks.indexOf(target)
+        target.style.pointerEvents = 'none'
+        target.style.backgroundImage = `url(img/${imgArr[game.game[current]]})`
         target.style.backgroundSize = 'cover'
-        checkForMatch(target, game, current)
-        if (game.wrong == retries) {
-            displayCover('Game Over !!!')
-        }
-        else if (game.score == fullScore) {
-            displayCover('You Win !!!')
-        }
+        checkForMatch(game, current)
     }
 }
 function render_game() {
-    document.querySelector('.game').style.display = 'block'
-    document.querySelector('.cover').style.display = 'none'
     const game = {
         game: [],
-        prev: null,
+        prev: -1,
         score: 0,
         wrong: 0
     }
     const blocks = Array.from(document.querySelectorAll('.block'))
     setUp(game.game)
     blocks.forEach((block) => {
+        block.style.backgroundImage = 'none'
+        block.style.pointerEvents = 'auto'
         block.addEventListener('click', handlerWithParams(game, blocks))
     })
 }
 
 const start = document.getElementById('start')
-start.addEventListener('click', () => render_game())
+start.addEventListener('click', () => {
+    window.location = window.location
+    render_game()
+})
 render_game()
