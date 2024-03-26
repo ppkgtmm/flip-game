@@ -74,14 +74,13 @@ function checkForMatch(game, current) {
     game.prev = -1
 }
 
-function handlerWithParams(game, blocks) {
+function handlerWithParams(game, index) {
     return function eventListener() {
         const { target } = event
-        const current = blocks.indexOf(target)
         target.style.pointerEvents = 'none'
-        target.style.backgroundImage = `url(img/${imgArr[game.game[current]]})`
+        target.style.backgroundImage = `url(img/${imgArr[game.game[index]]})`
         target.style.backgroundSize = 'cover'
-        checkForMatch(game, current)
+        checkForMatch(game, index)
     }
 }
 function render_game() {
@@ -91,19 +90,29 @@ function render_game() {
         score: 0,
         wrong: 0
     }
-    const blocks = Array.from(document.querySelectorAll('.block'))
+    const wrapper = document.createElement('div')
+    wrapper.classList.add('wrapper')
+    document.querySelector('.game').appendChild(wrapper)
     setUp(game.game)
     document.querySelector('.retries .count').innerText = retries - game.wrong
-    blocks.forEach((block) => {
+    game.game.forEach((_, index) => {
+        const block = document.createElement("div")
+        block.classList.add("block")
         block.style.backgroundImage = 'none'
         block.style.pointerEvents = 'auto'
-        block.addEventListener('click', handlerWithParams(game, blocks))
+        wrapper.appendChild(block)
+        block.addEventListener('click', handlerWithParams(game, index))
     })
 }
 
 const start = document.getElementById('start')
 start.addEventListener('click', () => {
-    window.location = window.location
+    const cover = document.querySelector('.cover')
+    const game = document.querySelector('.game')
     render_game()
+    cover.style.transition = 'display 4s ease-in-out'
+    cover.style.display = 'none'
+    game.removeChild(document.querySelector('.wrapper'))
+    game.style.display = 'block'
 })
 render_game()
