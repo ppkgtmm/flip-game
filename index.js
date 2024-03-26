@@ -109,10 +109,10 @@ const start = document.getElementById('start')
 start.addEventListener('click', () => {
     const cover = document.querySelector('.cover')
     const game = document.querySelector('.game')
+    game.removeChild(document.querySelector('.wrapper'))
     render_game()
     cover.style.transition = 'display 4s ease-in-out'
     cover.style.display = 'none'
-    game.removeChild(document.querySelector('.wrapper'))
     game.style.display = 'block'
 })
 render_game()
